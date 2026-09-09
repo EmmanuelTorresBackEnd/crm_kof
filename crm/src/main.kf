@@ -1,0 +1,44 @@
+record ApiMessage(String message)
+
+main() {
+    var app = web.app()
+
+    app.get("/") {
+        headerSet("content-type", "text/html; charset=utf-8")
+        return Path("crm/web/index.html").readText()
+    }
+
+    app.get("/health") {
+        return "{\"status\":\"ok\",\"service\":\"crm\"}"
+    }
+
+    app.get("/api/users") {
+        return "{\"data\":[],\"resource\":\"users\"}"
+    }
+
+    app.get("/api/leads") {
+        return "{\"data\":[],\"resource\":\"leads\"}"
+    }
+
+    app.post("/api/leads") {
+        return "{\"message\":\"lead endpoint ready\"}"
+    }
+
+    app.get("/api/contacts") {
+        return "{\"data\":[],\"resource\":\"contacts\"}"
+    }
+
+    app.get("/api/organizations") {
+        return "{\"data\":[],\"resource\":\"organizations\"}"
+    }
+
+    app.get("/api/deals") {
+        return "{\"data\":[],\"resource\":\"deals\"}"
+    }
+
+    app.get("/api/activities") {
+        return "{\"data\":[],\"resource\":\"activities\"}"
+    }
+
+    app.listen(8080)
+}

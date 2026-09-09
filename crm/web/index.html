@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>8Tech CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #211a35;
+      --muted: #756d86;
+      --paper: #faf9fc;
+      --white: #ffffff;
+      --line: #e8e3ef;
+      --purple: #6d3fc2;
+      --purple-dark: #38206f;
+      --purple-soft: #eee7fb;
+      --violet: #9d76e5;
+      --shadow: 0 24px 60px rgba(23, 32, 42, .11);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: var(--paper); font-family: "DM Sans", sans-serif; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    .hidden { display: none !important; }
+    .login-shell { min-height: 100vh; display: grid; grid-template-columns: minmax(360px, 1.05fr) minmax(420px, .95fr); }
+    .login-art { position: relative; overflow: hidden; padding: clamp(32px, 7vw, 92px); color: #fff; background: var(--purple-dark); }
+    .login-art:before, .login-art:after { content: ""; position: absolute; border-radius: 50%; opacity: .85; }
+    .login-art:before { width: 380px; height: 380px; right: -130px; top: 13%; background: var(--violet); }
+    .login-art:after { width: 260px; height: 260px; left: -100px; bottom: -80px; background: #c8b1f2; }
+    .art-content { position: relative; z-index: 1; max-width: 530px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; font-family: "Space Grotesk", sans-serif; font-weight: 700; letter-spacing: .02em; }
+    .brand-mark { display: grid; place-items: center; width: 34px; height: 34px; color: var(--purple-dark); background: #fff; border-radius: 10px; font-size: 14px; }
+    .eyebrow { margin: 110px 0 22px; color: #d9c8fa; font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+    h1, h2, h3 { margin: 0; font-family: "Space Grotesk", sans-serif; }
+    .login-art h1 { max-width: 500px; font-size: clamp(42px, 5vw, 76px); line-height: .98; letter-spacing: -.04em; }
+    .art-copy { max-width: 420px; margin: 28px 0 0; color: #b8d1ce; font-size: 17px; line-height: 1.6; }
+    .signal { display: flex; gap: 10px; margin-top: 52px; align-items: center; color: #d6e8e2; font-size: 13px; }
+    .signal i { width: 9px; height: 9px; display: inline-block; background: #d9c8fa; border-radius: 50%; box-shadow: 0 0 0 6px rgba(217,200,250,.16); }
+    .login-panel { display: grid; place-items: center; padding: 42px; background: var(--paper); }
+    .login-card { width: min(100%, 420px); }
+    .login-card h2 { margin-top: 60px; font-size: 34px; letter-spacing: -.04em; }
+    .login-card > p { margin: 10px 0 34px; color: var(--muted); line-height: 1.5; }
+    .field { display: grid; gap: 8px; margin-bottom: 18px; }
+    .field label { color: #586670; font-size: 13px; font-weight: 700; }
+    .field input { width: 100%; padding: 14px 15px; color: var(--ink); background: var(--white); border: 1px solid var(--line); border-radius: 9px; outline: none; transition: border-color .2s, box-shadow .2s; }
+    .field input:focus { border-color: var(--purple); box-shadow: 0 0 0 4px rgba(109,63,194,.11); }
+    .login-options { display: flex; justify-content: space-between; align-items: center; margin: 4px 0 24px; color: var(--muted); font-size: 13px; }
+    .check { display: inline-flex; gap: 8px; align-items: center; }
+    .check input { accent-color: var(--purple); }
+    .text-button { padding: 0; color: var(--purple); background: none; border: 0; font-weight: 700; }
+    .primary { width: 100%; padding: 15px 18px; color: #fff; background: var(--purple); border: 0; border-radius: 9px; font-weight: 700; transition: transform .2s, background .2s; }
+    .primary:hover { background: var(--purple-dark); transform: translateY(-1px); }
+    .demo-note { margin-top: 20px; padding: 12px 14px; color: #665b79; background: var(--purple-soft); border-left: 3px solid var(--purple); border-radius: 6px; font-size: 12px; line-height: 1.5; }
+    .dashboard { min-height: 100vh; display: grid; grid-template-columns: 240px 1fr; }
+    .sidebar { padding: 28px 18px; color: #e4d9fa; background: var(--purple-dark); }
+    .sidebar .brand { margin: 0 12px 58px; }
+    .nav-label { margin: 0 12px 12px; color: #76aaa4; font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+    .nav { display: grid; gap: 4px; }
+    .nav button { width: 100%; padding: 12px; color: #a8c9c4; background: transparent; border: 0; border-radius: 7px; text-align: left; }
+    .nav button.active, .nav button:hover { color: #fff; background: rgba(255,255,255,.1); }
+    .profile { display: flex; gap: 10px; align-items: center; margin: 90px 10px 0; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.14); font-size: 12px; }
+    .avatar { display: grid; place-items: center; width: 34px; height: 34px; color: var(--purple-dark); background: #d9c8fa; border-radius: 50%; font-weight: 700; }
+    .profile small { display: block; margin-top: 3px; color: #7ca8a2; }
+    .main { padding: 32px clamp(24px, 4vw, 58px); overflow: auto; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 38px; }
+    .topbar h2 { font-size: 28px; letter-spacing: -.04em; }
+    .topbar p { margin: 7px 0 0; color: var(--muted); font-size: 14px; }
+    .top-actions { display: flex; gap: 10px; align-items: center; }
+    .icon-button { width: 40px; height: 40px; color: var(--muted); background: var(--white); border: 1px solid var(--line); border-radius: 8px; }
+    .new-lead { padding: 11px 16px; color: #fff; background: var(--purple); border: 0; border-radius: 8px; font-weight: 700; }
+    .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
+    .metric { padding: 20px; background: var(--white); border: 1px solid var(--line); border-radius: 10px; }
+    .metric-top { display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; }
+    .metric-value { margin-top: 14px; font-family: "Space Grotesk", sans-serif; font-size: 30px; font-weight: 700; }
+    .trend { margin-top: 10px; color: var(--purple); font-size: 12px; font-weight: 700; }
+    .content-grid { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(270px, .75fr); gap: 18px; }
+    .panel { padding: 22px; background: var(--white); border: 1px solid var(--line); border-radius: 10px; }
+    .panel-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .panel-head h3 { font-size: 17px; }
+    .panel-head button { color: var(--purple); background: none; border: 0; font-size: 12px; font-weight: 700; }
+    .lead-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .lead-table th { padding: 0 8px 12px; color: var(--muted); font-size: 11px; font-weight: 600; text-align: left; }
+    .lead-table td { padding: 14px 8px; border-top: 1px solid #edf1ee; }
+    .lead-name { font-weight: 700; }
+    .lead-company { margin-top: 3px; color: var(--muted); font-size: 11px; }
+    .pill { display: inline-block; padding: 5px 8px; border-radius: 5px; font-size: 10px; font-weight: 700; }
+    .pill.hot { color: #a84b2d; background: #fde4d9; }
+    .pill.warm { color: #886620; background: #fff1c9; }
+    .pill.new { color: var(--purple); background: var(--purple-soft); }
+    .activity { display: grid; gap: 17px; }
+    .activity-item { display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: start; }
+    .activity-dot { display: grid; place-items: center; width: 28px; height: 28px; color: var(--purple); background: var(--purple-soft); border-radius: 7px; font-size: 12px; }
+    .activity-item p { margin: 0; font-size: 12px; line-height: 1.45; }
+    .activity-item time { display: block; margin-top: 4px; color: var(--muted); font-size: 10px; }
+    @media (max-width: 900px) { .login-shell { grid-template-columns: 1fr; } .login-art { min-height: 390px; } .eyebrow { margin-top: 70px; } .login-panel { min-height: 570px; } .dashboard { grid-template-columns: 1fr; } .sidebar { display: none; } .metrics { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 620px) { .login-panel { padding: 28px 22px; } .login-card h2 { margin-top: 20px; } .main { padding: 24px 16px; } .topbar { align-items: flex-start; } .topbar h2 { font-size: 24px; } .top-actions .icon-button { display: none; } .content-grid { grid-template-columns: 1fr; } .lead-table th:nth-child(3), .lead-table td:nth-child(3) { display: none; } }
+  </style>
+</head>
+<body>
+  <section id="loginView" class="login-shell">
+    <div class="login-art">
+      <div class="art-content">
+        <a class="brand" href="#"><span class="brand-mark">8T</span> 8Tech - Soluções Tecnológicas</a>
+        <p class="eyebrow">Inteligencia comercial</p>
+        <h1>Venda com mais contexto.</h1>
+        <p class="art-copy">Um lugar calmo para acompanhar cada conversa, oportunidade e proximo passo do seu time.</p>
+        <div class="signal"><i></i> Sua equipe esta pronta para o proximo movimento</div>
+      </div>
+    </div>
+    <div class="login-panel">
+      <div class="login-card">
+        <span class="eyebrow" style="margin:0; color:var(--purple);">Área da equipe</span>
+        <h2>Bem-vindo de volta</h2>
+        <p>Entre para ver como seus leads estao avancando hoje.</p>
+        <form id="loginForm">
+          <div class="field"><label for="email">Email profissional</label><input id="email" type="email" placeholder="voce@empresa.com" required></div>
+          <div class="field"><label for="password">Senha</label><input id="password" type="password" placeholder="Sua senha" required></div>
+          <div class="login-options"><label class="check"><input type="checkbox"> Lembrar de mim</label><button class="text-button" type="button">Esqueci minha senha</button></div>
+          <button class="primary" type="submit">Entrar na dashboard</button>
+        </form>
+        <div class="demo-note">Acesso protegido da equipe 8Tech. Seus dados ficam armazenados com segurança no banco de usuários.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="dashboardView" class="dashboard hidden">
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-mark">8T</span> 8Tech - Soluções Tecnológicas</a>
+      <p class="nav-label">Workspace</p>
+      <nav class="nav"><button class="active">Visao geral</button><button>Leads</button><button>Negocios</button><button>Contatos</button><button>Atividades</button></nav>
+      <p class="nav-label" style="margin-top:38px;">Gerenciar</p>
+      <nav class="nav"><button>Relatorios</button><button>Configuracoes</button></nav>
+      <div class="profile"><span class="avatar">MS</span><div>Marina Silva<small>Gerente comercial</small></div></div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div><h2>Bom dia, Marina</h2><p>Aqui esta o pulso do seu pipeline.</p></div><div class="top-actions"><button class="icon-button" aria-label="Notificacoes">&#9673;</button><button class="new-lead">+ Novo lead</button></div></header>
+      <section class="metrics"><article class="metric"><div class="metric-top"><span>Leads ativos</span><span>01</span></div><div class="metric-value">248</div><div class="trend">+12,5% este mes</div></article><article class="metric"><div class="metric-top"><span>Em qualificacao</span><span>02</span></div><div class="metric-value">64</div><div class="trend">+8 novos esta semana</div></article><article class="metric"><div class="metric-top"><span>Pipeline total</span><span>03</span></div><div class="metric-value">R$ 486k</div><div class="trend">+18,2% vs. ultimo mes</div></article><article class="metric"><div class="metric-top"><span>Conversao</span><span>04</span></div><div class="metric-value">24,8%</div><div class="trend">+2,4 pontos</div></article></section>
+      <section class="content-grid"><article class="panel"><div class="panel-head"><h3>Leads recentes</h3><button>Ver todos &rarr;</button></div><table class="lead-table"><thead><tr><th>Lead</th><th>Status</th><th>Responsavel</th><th>Ultimo contato</th></tr></thead><tbody><tr><td><div class="lead-name">Ana Beatriz Costa</div><div class="lead-company">Orbe Sistemas</div></td><td><span class="pill hot">Quente</span></td><td>Lucas R.</td><td>Hoje, 09:42</td></tr><tr><td><div class="lead-name">Rafael Mendes</div><div class="lead-company">Vento Logistica</div></td><td><span class="pill warm">Qualificando</span></td><td>Carla M.</td><td>Ontem, 16:20</td></tr><tr><td><div class="lead-name">Joao Pedro Lima</div><div class="lead-company">Nexo Digital</div></td><td><span class="pill new">Novo</span></td><td>Marina S.</td><td>Ontem, 11:08</td></tr><tr><td><div class="lead-name">Camila Rocha</div><div class="lead-company">Casa Clara</div></td><td><span class="pill warm">Qualificando</span></td><td>Lucas R.</td><td>12 mai, 14:55</td></tr></tbody></table></article><aside class="panel"><div class="panel-head"><h3>Proximas atividades</h3><button>Agenda &rarr;</button></div><div class="activity"><div class="activity-item"><span class="activity-dot">&#9742;</span><div><p><strong>Ligacao</strong> com Ana Beatriz</p><time>Hoje, 14:00</time></div></div><div class="activity-item"><span class="activity-dot">&#9993;</span><div><p>Enviar proposta para Vento Logistica</p><time>Hoje, 16:30</time></div></div><div class="activity-item"><span class="activity-dot">&#9733;</span><div><p>Reuniao de qualificacao com Nexo</p><time>Amanha, 10:00</time></div></div></div></aside></section>
+    </main>
+  </section>
+  <script>
+    const loginView = document.getElementById('loginView');
+    const dashboardView = document.getElementById('dashboardView');
+    document.getElementById('loginForm').addEventListener('submit', (event) => {
+      event.preventDefault();
+      loginView.classList.add('hidden');
+      dashboardView.classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>
